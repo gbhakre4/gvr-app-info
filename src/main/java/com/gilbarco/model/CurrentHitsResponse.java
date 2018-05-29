@@ -2,11 +2,8 @@ package com.gilbarco.model;
 
 import java.io.Serializable;
 
-public class JsonResponse implements Serializable{
+public class CurrentHitsResponse implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	String timestamp;
 	int calls;

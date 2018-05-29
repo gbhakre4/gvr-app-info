@@ -13,27 +13,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gilbarco.model.JsonResponse;
+import com.gilbarco.model.CurrentHitsResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ *  @author Gaurav Bhakre
+ *  This service gives information about application.
+ */
 @Controller
 @RequestMapping("/app-info-service")
-public class AppInfoService {
-	//private static int count=1;
+public class GVRAppInfoService {
 	private static final AtomicInteger counter = new AtomicInteger();
-	private static Logger LOGGER = Logger.getLogger(AppInfoService.class.getName());
+	private static Logger LOGGER = Logger.getLogger(GVRAppInfoService.class.getName());
 	
-	@RequestMapping(value = "/get-app-info" , method = RequestMethod.GET )
-	public @ResponseBody String getAppInfo() {
-		LOGGER.info("get app-info started");
-		JsonResponse response = new JsonResponse();
+	/**
+	 * This method checks number of calls made until now.
+	 * @return String - Json string of number of calls made with current timestamp
+	 */
+	@RequestMapping(value = "/get-current-hits" , method = RequestMethod.GET )
+	public @ResponseBody String getCurrentHits() {
+		LOGGER.info("get current hits started");
+		CurrentHitsResponse response = new CurrentHitsResponse();
 		String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX")
 				.withZone(ZoneOffset.UTC).format(Instant.now());
 		response.setTimestamp(timestamp);
 		response.setCalls(counter.incrementAndGet());
 		Gson gson = new GsonBuilder().create();
-		LOGGER.info("get app-info ended");
+		LOGGER.info("get current hits ended");
 		return gson.toJson(response);
 	}
 }
